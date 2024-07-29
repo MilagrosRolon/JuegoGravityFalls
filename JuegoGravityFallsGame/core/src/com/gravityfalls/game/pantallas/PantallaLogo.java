@@ -19,9 +19,13 @@ public class PantallaLogo implements Screen {
     float efectoEspera = 0, contTiempo = 0;
     float efectoTermina = 1.0f, contTiempoTermina = 0;
     Texto t;
-
+    Entradas entradas;
     @Override
     public void show() {
+       
+    	 Entradas entradas = new Entradas(this);
+         Gdx.input.setInputProcessor(entradas);
+
         fondo = new Imagen(Recursos.LOGO);
         b = Render.batch;
         fondo.setTransparencia(0);
@@ -30,7 +34,7 @@ public class PantallaLogo implements Screen {
         t.setTexto("( PRESIONA ENTER PARA SALTAR LA INTRO )");
         t.setPosition(315, 40);
 
-        Gdx.input.setInputProcessor(new Entradas(this));
+     
     }
 
     @Override
