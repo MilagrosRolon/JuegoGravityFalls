@@ -3,6 +3,10 @@ package com.gravityfalls.game.EntradasSalidas;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
+import com.gravityfalls.game.pantallas.PantallaElegirPersonaje;
+import com.gravityfalls.game.pantallas.PantallaEmpezarBusqueda;
+import com.gravityfalls.game.pantallas.PantallaGameOver;
+import com.gravityfalls.game.pantallas.PantallaLevelUp;
 import com.gravityfalls.game.pantallas.PantallaLogo;
 import com.gravityfalls.game.pantallas.PantallaMenu;
 import com.gravityfalls.game.utiles.Config;
@@ -11,7 +15,21 @@ public class EntradasSalidas implements InputProcessor {
 
     private PantallaLogo pantallaLogo;
     private PantallaMenu pantallaMenu;
-    private boolean abajo = false, arriba = false, enter =false,click= false;
+    private PantallaElegirPersonaje pantallaElegirPersonaje;
+    private PantallaLevelUp pantallaLevelUp;
+    private PantallaGameOver pantallaGameOver;
+    
+    //(mientras no funcione el mapa)
+    private  PantallaEmpezarBusqueda  pantallaEmpezarBusqueda;
+    
+    private boolean
+    abajo = false, 
+    arriba = false, 
+    enter = false ,
+    click = false,
+    izquierda = false,
+    derecha = false;
+    
     private int mouseX = 0, mouseY = 0;
 
     // Constructor para PantallaMenu
@@ -23,39 +41,58 @@ public class EntradasSalidas implements InputProcessor {
     public EntradasSalidas(PantallaLogo pantallaLogo) {
         this.pantallaLogo = pantallaLogo;
     }
+   //Constructor para pantallaEligirPersonaje 
+    public EntradasSalidas(PantallaElegirPersonaje pantallaElegirPersonaje) {
+        this.pantallaElegirPersonaje = pantallaElegirPersonaje;
+    }
+    //Constructor para pantallaLevelUp
+    public EntradasSalidas(PantallaLevelUp pantallaLevelUp) {
+        this.pantallaLevelUp = pantallaLevelUp;
+    }
+    //Constructor para pantallaGameOver
+    public EntradasSalidas(PantallaGameOver pantallaGameOver) {
+        this.pantallaGameOver = pantallaGameOver;
+    }
+    //constructor para ver Level up y Game over (mientras no funcione el mapa)
+    public EntradasSalidas(PantallaEmpezarBusqueda pantallaEmpezarBusqueda) {
+        this.pantallaEmpezarBusqueda = pantallaEmpezarBusqueda;
+    }
+
 
     @Override
     public boolean keyDown(int keycode) {
-        if (pantallaMenu != null) {
-            pantallaMenu.tiempo = 0.08f;
-        }
-
+        System.out.println("Key down: " + keycode);
         if (keycode == Keys.DOWN) {
             abajo = true;
         } else if (keycode == Keys.UP) {
             arriba = true;
-        }
-        if (keycode == Keys.ENTER) {
+        } else if (keycode == Keys.LEFT) {
+            izquierda = true;
+        } else if (keycode == Keys.RIGHT) {
+            derecha = true;
+        } else if (keycode == Keys.ENTER) {
             enter = true;
             if (pantallaLogo != null) {
                 pantallaLogo.terminarPantalla();
             }
         }
-
         return false;
     }
 
     @Override
     public boolean keyUp(int keycode) {
+        System.out.println("Key up: " + keycode);
         if (keycode == Keys.DOWN) {
             abajo = false;
         } else if (keycode == Keys.UP) {
             arriba = false;
-        }
-        if (keycode == Keys.ENTER) {
+        } else if (keycode == Keys.LEFT) {
+            izquierda = false;
+        } else if (keycode == Keys.RIGHT) {
+            derecha = false;
+        } else if (keycode == Keys.ENTER) {
             enter = false;
         }
-
         return false;
     }
 
@@ -124,4 +161,15 @@ public class EntradasSalidas implements InputProcessor {
 		return click;
 	}
 
+	public boolean isIzquierda() {
+		return  izquierda;
+	}
+
+	public boolean isDerecha() {
+		
+		return derecha;
+	}
+
 }
+
+
